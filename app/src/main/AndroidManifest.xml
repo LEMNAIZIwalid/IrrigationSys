@@ -35,6 +35,9 @@
         <!-- Page "Mot de passe Change" -->
         <activity android:name=".views.ResetPasswordActivity" />
 
+        <!-- Page "Gestion de Profil" -->
+        <activity android:name=".views.ProfileManagementActivity" />
+
         <!-- Page d'accueil après connexion -->
         <activity android:name=".views.HomeActivity" />
 
