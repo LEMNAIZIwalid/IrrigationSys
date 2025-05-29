@@ -24,7 +24,6 @@ public class ProfileManagementActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPhone = findViewById(R.id.editTextPhone);
-        editTextCurrentPassword = findViewById(R.id.editTextCurrentPassword);
         buttonUpdateProfile = findViewById(R.id.buttonUpdateProfile);
         buttonChangePassword = findViewById(R.id.buttonChangePassword);
         buttonLogout = findViewById(R.id.buttonLogout);
