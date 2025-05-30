@@ -40,6 +40,10 @@
 
         <!-- Page d'accueil après connexion -->
         <activity android:name=".views.HomeActivity" />
+        <!-- Pages de arrosage -->
+        <activity android:name=".views.ArrosageManuelleActivity" />
+        <activity android:name=".views.ArrosageAutomatiqueActivity" />
+
 
         <!-- Autres pages appelées depuis HomeActivity -->
         <activity android:name=".views.NotificationActivity" />

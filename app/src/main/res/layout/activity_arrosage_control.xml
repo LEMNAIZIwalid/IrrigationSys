@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#FFFFFF">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#Bfd8bd"
+    android:padding="24dp">
 
     <TextView
-        android:id="@+id/textArrosage"
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contrôle d'Arrosage"
+        android:text="Contrôle d'arrosage"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_centerInParent="true"/>
-</RelativeLayout>
+        android:textColor="#333"
+        android:layout_marginBottom="40dp" />
+
+    <Button
+        android:id="@+id/buttonManual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Arrosage manuel"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical|start"
+        android:paddingStart="16dp" />
+
+    <Button
+        android:id="@+id/buttonAuto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Arrosage automatique"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical|start"
+        android:paddingStart="16dp" />
+
+</LinearLayout>
