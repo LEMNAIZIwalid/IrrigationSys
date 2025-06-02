@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    android:padding="16dp">
 
+    <!-- Bouton + -->
+    <ImageButton
+        android:id="@+id/addScheduleButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="#4CAF50"
+        android:background="@drawable/rounded_circle"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@android:color/white"
+        android:contentDescription="Ajouter un arrosage" />
+
+    <!-- Message si aucune programmation -->
     <TextView
-        android:text="Page Arrosage Automatique"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#333" />
-</LinearLayout>
+        android:id="@+id/emptyMessage"
+        android:layout_centerInParent="true"
+        android:text="Pas d'arrosage"
+        android:textSize="20sp"
+        android:textColor="#777"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Liste des arrosages -->
+    <LinearLayout
+        android:id="@+id/scheduleList"
+        android:layout_below="@id/addScheduleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp" />
+</RelativeLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutContainer"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,18 +8,17 @@
     android:padding="24dp"
     android:background="#F5F5F5">
 
-    <!-- Bouton circulaire avec icône -->
     <ImageButton
         android:id="@+id/powerButton"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:backgroundTint="#4CAF50"
-        android:background="@drawable/power_on_cercle"
+        android:background="@drawable/power_button_shape"
+        android:backgroundTint="@android:color/holo_green_dark"
         android:src="@drawable/baseline_power_24"
+        app:tint="@android:color/white"
         android:scaleType="centerInside"
         android:contentDescription="Power Button" />
 
-    <!-- Texte ON / OFF -->
     <TextView
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
@@ -30,14 +29,12 @@
         android:textColor="#333"
         android:layout_marginTop="12dp" />
 
-    <!-- Message d'état -->
     <TextView
         android:id="@+id/statusMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arrosage Manuel arrêté"
+        android:text="Arrosage ON"
         android:textSize="16sp"
         android:textColor="#666"
         android:layout_marginTop="12dp" />
-
 </LinearLayout>

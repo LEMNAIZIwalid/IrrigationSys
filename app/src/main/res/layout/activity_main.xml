@@ -10,7 +10,7 @@
         android:id="@+id/logoImageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/sdr_logo"
+        android:src="@drawable/sdrlogo_cercle"
         android:contentDescription="Logo App"
         android:layout_centerInParent="true"/>
 </RelativeLayout>
