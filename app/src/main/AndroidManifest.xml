@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.irrigationapp">
 
+    <!-- Permission pour autoriser l'application à accéder à Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
@@ -40,10 +43,10 @@
 
         <!-- Page d'accueil après connexion -->
         <activity android:name=".views.HomeActivity" />
+
         <!-- Pages de arrosage -->
         <activity android:name=".views.ArrosageManuelleActivity" />
         <activity android:name=".views.ArrosageAutomatiqueActivity" />
-
 
         <!-- Autres pages appelées depuis HomeActivity -->
         <activity android:name=".views.NotificationActivity" />

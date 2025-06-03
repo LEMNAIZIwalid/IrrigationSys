@@ -1,33 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="24dp"
-    android:gravity="center">
+    android:background="#FFFFFF"
+    tools:context=".views.LoginActivity">
 
+    <!-- Logo de l'application -->
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="App Logo"
+        android:src="@drawable/sdrlogo_removebg" />
+
+    <!-- Titre "Log in" avec icône -->
+
+<!--    <TextView-->
+<!--        android:id="@+id/appNameText"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:text="ECO TRACKER"-->
+<!--        android:textColor="#4CAF50"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="bold" />-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_lock_lock" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Log in"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+    </LinearLayout>
+
+    <!-- Username -->
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
-        android:inputType="text" />
+        android:inputType="text"
+        android:drawableLeft="@android:drawable/ic_menu_myplaces"
+        android:padding="10dp"
+        android:background="@android:drawable/editbox_background" />
 
+    <!-- Password -->
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:padding="10dp"
+        android:background="@android:drawable/editbox_background" />
 
+    <!-- Bouton Login -->
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF" />
 
+    <!-- Lien "Mot de passe oublié ?" -->
     <TextView
         android:id="@+id/forgotPasswordText"
         android:layout_width="wrap_content"
@@ -38,5 +99,4 @@
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:focusable="true"/>
-
 </LinearLayout>
