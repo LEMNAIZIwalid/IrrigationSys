@@ -49,7 +49,11 @@ public class LoginActivity extends AppCompatActivity {
                 public void onSuccess() {
                     runOnUiThread(() -> {
                         Toast.makeText(LoginActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                        // Envoi du nom d'utilisateur à HomeActivity
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.putExtra("USERNAME", username);  // clé "USERNAME"
+                        startActivity(intent);
                         finish();
                     });
                 }
