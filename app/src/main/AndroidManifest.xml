@@ -6,6 +6,7 @@
     <!-- Permission pour autoriser l'application à accéder à Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
@@ -53,6 +54,8 @@
         <activity android:name=".views.SettingsActivity" />
         <activity android:name=".views.ArrosageControlActivity" />
         <activity android:name=".views.StatistiquesActivity" />
+
+
 
     </application>
 

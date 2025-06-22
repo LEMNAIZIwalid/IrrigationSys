@@ -9,7 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.example.irrigationapp.R;
 
@@ -17,9 +20,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    private ImageView iconEditProfile, imageProfile;
+    private ImageView iconEditProfile, iconEditName, imageProfile;
     private TextView textUsername;
-
     private SharedPreferences prefs;
 
     @Override
@@ -28,22 +30,37 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         iconEditProfile = findViewById(R.id.iconEditProfile);
+        iconEditName = findViewById(R.id.iconEditName);
         textUsername = findViewById(R.id.textUsername);
         imageProfile = findViewById(R.id.imageProfile);
 
-        // ✅ Remplacement de l'ancienne méthode dépréciée
         prefs = getSharedPreferences("user_settings", MODE_PRIVATE);
 
         // Charger les données enregistrées
         loadProfileData();
 
-        imageProfile.setOnClickListener(v -> openGallery());
+        // 📷 Clic sur image → Importer ou Supprimer
+        imageProfile.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Photo de profil")
+                    .setItems(new CharSequence[]{"📁 Importer une image", "🗑 Supprimer l'image"}, (dialog, which) -> {
+                        if (which == 0) {
+                            openGallery();
+                        } else if (which == 1) {
+                            prefs.edit().remove("profileImageUri").apply();
+                            imageProfile.setImageResource(R.drawable.logo_user);
+                            Toast.makeText(this, "Image supprimée", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .show();
+        });
 
-        iconEditProfile.setOnClickListener(v -> {
+        // ✏️ Modifier le nom via l’icône crayon
+        iconEditName.setOnClickListener(v -> {
             EditText input = new EditText(this);
             input.setText(textUsername.getText());
 
-            new android.app.AlertDialog.Builder(this)
+            new AlertDialog.Builder(this)
                     .setTitle("Modifier le nom")
                     .setView(input)
                     .setPositiveButton("Valider", (dialog, which) -> {
@@ -56,6 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
                     })
                     .setNegativeButton("Annuler", null)
                     .show();
+        });
+
+        // 📄 Rediriger vers ProfileManagementActivity
+        iconEditProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingsActivity.this, ProfileManagementActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -82,6 +105,8 @@ public class SettingsActivity extends AppCompatActivity {
         String uriStr = prefs.getString("profileImageUri", null);
         if (uriStr != null) {
             Glide.with(this).load(Uri.parse(uriStr)).into(imageProfile);
+        } else {
+            imageProfile.setImageResource(R.drawable.logo_user); // Image par défaut
         }
     }
 }
