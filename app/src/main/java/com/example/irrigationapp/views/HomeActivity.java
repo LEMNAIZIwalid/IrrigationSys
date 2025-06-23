@@ -10,10 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.irrigationapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("user_settings", MODE_PRIVATE);
 
+        // Initialisation des vues
         welcomeText = findViewById(R.id.welcomeText);
         profileImage = findViewById(R.id.profileImage);
         dateText = findViewById(R.id.dateText);
@@ -40,50 +47,73 @@ public class HomeActivity extends AppCompatActivity {
         weatherIcon = findViewById(R.id.weatherIcon);
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        // Affichage de la date actuelle
-        String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
-        dateText.setText(date);
+        // Afficher la date
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        dateText.setText(currentDate);
 
-        // Simuler la météo (tu peux remplacer par un appel API météo réel)
-//        int temp = 26; // simulateur
-//        if (temp > 30) {
-//            weatherText.setText("Soleil");
-//            weatherIcon.setImageResource(R.drawable.sun);
-//        } else if (temp > 15) {
-//            weatherText.setText("Nuageux");
-//            weatherIcon.setImageResource(R.drawable.cloudyday);
-//        } else if (temp > 5) {
-//            weatherText.setText("Nuages");
-//            weatherIcon.setImageResource(R.drawable.clouds);
-//        } else {
-//            weatherText.setText("Neige");
-//            weatherIcon.setImageResource(R.drawable.snowflake);
-//        }
-
-        // Cliquer sur la photo → Aller aux paramètres
-        profileImage.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        });
-
-        // Navigation bas
+        // Navigation barre du bas
         bottomNav.setOnItemSelectedListener(navListener);
+
+        // Aller aux paramètres en cliquant sur la photo
+        profileImage.setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+        });
     }
 
-    // ✅ Recharger les données utilisateur quand on revient sur cette page
     @Override
     protected void onResume() {
         super.onResume();
 
+        // Mettre à jour le nom
         String username = prefs.getString("username", "Utilisateur");
         welcomeText.setText(username);
 
+        // Mettre à jour l'image
         String uriStr = prefs.getString("profileImageUri", null);
         if (uriStr != null) {
             Glide.with(this).load(Uri.parse(uriStr)).into(profileImage);
         } else {
             profileImage.setImageResource(R.drawable.logo_user);
         }
+
+        // Charger météo depuis OpenWeatherMap
+        getWeatherData();
+    }
+
+    private void getWeatherData() {
+        String apiKey = "dc574f17c624770a10434935e6af58c3"; // 🔁 remplace par ta vraie clé API
+        String city = "Agadir";
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        JSONObject main = response.getJSONObject("main");
+                        double temp = main.getDouble("temp");
+
+                        // Afficher la température
+                        weatherText.setText(String.format(Locale.getDefault(), "%.1f°C", temp));
+
+                        // Choisir une icône selon la température
+                        if (temp > 30) {
+                            weatherIcon.setImageResource(R.drawable.sun);
+                        } else if (temp > 15) {
+                            weatherIcon.setImageResource(R.drawable.cloudyday);
+                        } else if (temp > 5) {
+                            weatherIcon.setImageResource(R.drawable.clouds);
+                        } else {
+                            weatherIcon.setImageResource(R.drawable.snowflake);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> error.printStackTrace());
+
+        queue.add(request);
     }
 
     private final NavigationBarView.OnItemSelectedListener navListener =
