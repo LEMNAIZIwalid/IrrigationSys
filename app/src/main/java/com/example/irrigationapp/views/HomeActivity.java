@@ -51,14 +51,11 @@ public class HomeActivity extends AppCompatActivity {
         bottomNav = findViewById(R.id.bottom_navigation);
         sensorDataLayout = findViewById(R.id.sensorDataLayout);
 
-        // Afficher la date actuelle
         String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
         dateText.setText(currentDate);
 
-        // Navigation bas
         bottomNav.setOnItemSelectedListener(navListener);
 
-        // Redirection paramètres
         profileImage.setOnClickListener(v -> {
             startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
         });
@@ -68,11 +65,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Affichage du nom d'utilisateur
         String username = prefs.getString("username", "Utilisateur");
         welcomeText.setText(username);
 
-        // Affichage de la photo
         String uriStr = prefs.getString("profileImageUri", null);
         if (uriStr != null) {
             Glide.with(this).load(Uri.parse(uriStr)).into(profileImage);
@@ -85,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getWeatherData() {
-        String apiKey = "dc574f17c624770a10434935e6af58c3"; // ← Remplace ta vraie clé si nécessaire
+        String apiKey = "dc574f17c624770a10434935e6af58c3";
         String city = "Agadir";
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
 
@@ -125,7 +120,6 @@ public class HomeActivity extends AppCompatActivity {
                 response -> {
                     try {
                         sensorDataLayout.removeAllViews();
-                        android.util.Log.d("SensorDataAPI", response.toString());
 
                         double temperature = response.getDouble("temperature");
                         double humidite = response.getDouble("humidite");
@@ -133,11 +127,11 @@ public class HomeActivity extends AppCompatActivity {
                         int waterLevel = response.getInt("waterLevel");
                         int light = response.getInt("light");
 
-                        addLine("🌡 Température : " + temperature + " °C");
-                        addLine("💧 Humidité air : " + humidite + " %");
-                        addLine("🌱 Humidité sol : " + solHumidite + " %");
-                        addLine("🪣 Niveau eau : " + waterLevel + " %");
-                        addLine("☀️ Lumière : " + light + " lx");
+                        addSensorCard(R.drawable.thermometer, "Température", temperature + " °C");
+                        addSensorCard(R.drawable.humidity, "Humidité de l'air", humidite + " %");
+                        addSensorCard(R.drawable.soilhealth, "Humidité du sol", solHumidite + " %");
+                        addSensorCard(R.drawable.sealevel, "Niveau d'eau", waterLevel + " %");
+                        addSensorCard(R.drawable.editing, "Lumière", light + " lx");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -148,16 +142,46 @@ public class HomeActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    private void addLine(String text) {
-        TextView tv = new TextView(this);
-        tv.setText(text);
-        tv.setTextSize(16);
-        tv.setPadding(12, 10, 12, 10);
-        tv.setGravity(Gravity.START);
-        tv.setLayoutParams(new ViewGroup.LayoutParams(
+    private void addSensorCard(int iconResId, String label, String value) {
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.HORIZONTAL);
+        card.setPadding(24, 20, 24, 20);
+        card.setBackgroundResource(R.drawable.sensor_card_bg);
+        card.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-        sensorDataLayout.addView(tv);
+        card.setElevation(6);
+
+        ImageView icon = new ImageView(this);
+        icon.setImageResource(iconResId);
+        LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(80, 80);
+        iconParams.setMarginEnd(24);
+        icon.setLayoutParams(iconParams);
+
+        LinearLayout textLayout = new LinearLayout(this);
+        textLayout.setOrientation(LinearLayout.VERTICAL);
+
+        TextView title = new TextView(this);
+        title.setText(label);
+        title.setTextSize(16);
+        title.setTypeface(null, android.graphics.Typeface.BOLD);
+
+        TextView valueText = new TextView(this);
+        valueText.setText(value);
+        valueText.setTextSize(18);
+        valueText.setTextColor(getResources().getColor(R.color.black));
+
+        textLayout.addView(title);
+        textLayout.addView(valueText);
+
+        card.addView(icon);
+        card.addView(textLayout);
+
+        LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        cardParams.setMargins(0, 16, 0, 0);
+        sensorDataLayout.addView(card, cardParams);
     }
 
     private final NavigationBarView.OnItemSelectedListener navListener =
