@@ -41,6 +41,8 @@ dependencies {
     //Pour le Meteo 
     implementation 'com.android.volley:volley:1.2.1'
 
+    //Pour les graphes
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     // ✅ Glide pour chargement des images
     implementation 'com.github.bumptech.glide:glide:4.16.0'

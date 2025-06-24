@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/textStatistiques"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/chartContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Statistiques - Suivi"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
-</RelativeLayout>
+        android:orientation="vertical"
+        android:padding="16dp" />
+
+</ScrollView>

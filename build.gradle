@@ -2,9 +2,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' } // ✅ Ajouté pour les dépendances GitHub comme MPAndroidChart
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.10.0'
+        classpath 'com.android.tools.build:gradle:8.10.0' // ✅ Gardé tel quel
     }
 }
 
@@ -12,5 +13,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' } // ✅ Ajouté ici aussi (souvent nécessaire pour les plugins/app)
     }
 }
